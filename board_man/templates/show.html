@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <div class="schede">
+        {% for board in boards %}
+            <span style="color: black;">{{ board.macAddress }}</span>
+            <span style="color: black;">{{ board.status }}</span>
+            <span style="color: black;">{{ board.where }}</span>
+            <span style="color: black;">{{ board.defects }}</span>
+            <a href = "{% url 'change_status' board.pk %}" class = "btn btn-primary">Cambia Stato</a>
+            <a href = "{% url 'clear_defect' board.pk %}" class = "btn btn-success">Cancella difetto</a>
+            <form style="display: inline;" action="{% url 'add_defect' board.pk %}" method="POST">
+                {% csrf_token %}
+                <input type="text" name="defects">
+                <input class="btn btn-primary" type="submit" value="Registra difetto">
+            </form>
+            <p>---------------------------</p>
+        {% endfor %}
+    </div>
+    <div class="return">
+        <a href = "{% url 'homepage' %}" type="button" class="btn btn-primary">Homepage</a>
+    </div>
+</body>
+</html>
