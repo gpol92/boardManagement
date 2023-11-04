@@ -14,6 +14,7 @@
             <span style="color: black;">{{ board.status }}</span>
             <span style="color: black;">{{ board.where }}</span>
             <span style="color: black;">{{ board.defects }}</span>
+            <span style="color: black;">{{ board.actions }}</span>
             <a href = "{% url 'change_status' board.pk %}" class = "btn btn-primary">Cambia Stato</a>
             <a href = "{% url 'clear_defect' board.pk %}" class = "btn btn-success">Cancella difetto</a>
             <form style="display: inline;" action="{% url 'add_defect' board.pk %}" method="POST">
@@ -21,6 +22,7 @@
                 <input type="text" name="defects">
                 <input class="btn btn-primary" type="submit" value="Registra difetto">
             </form>
+            <a href = "{% url 'delete_board' board.pk %}" class = "btn btn-danger">Cancella scheda</a>
             <p>---------------------------</p>
         {% endfor %}
     </div>

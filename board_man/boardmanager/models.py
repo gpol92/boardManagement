@@ -23,6 +23,7 @@ class Board(models.Model):
     status = models.CharField(max_length=1, choices=STATUS_CHOICES)
     where = models.CharField(max_length=1, choices=WHERE_CHOICES)
     defects = models.TextField()
+    actions = models.TextField()
 
     def __str__(self):
-        return self.macAddress + self.status + self.where + self.defects
+        return self.macAddress + self.status + self.where + self.defects + self.actions

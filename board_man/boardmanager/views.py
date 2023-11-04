@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views import View
-from django.views.generic.edit import FormView, CreateView
+from django.views.generic.edit import FormView, CreateView, UpdateView, DeleteView
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy, reverse
 from .models import Board
@@ -48,17 +48,23 @@ class ClearDefectView(View):
         board.save()
         return HttpResponseRedirect(reverse('show'))
 
-class AddDefectView(View):
+class UpdateDefectView(UpdateView):
     def post(self, request, pk):
         board = get_object_or_404(Board, pk=pk)
-        form = BoardForm(request.POST, instance=board)
         defects = request.POST.get('defects', '')
-        if form.is_valid():
-            board.defects = defects
-            board.save()
-            return HttpResponseRedirect(reverse('show'))
-        else:
-            return HttpResponseRedirect(reverse('homepage'))
-        
+        board.defects = defects
+        board.save()
+        return HttpResponseRedirect(reverse('show'))
+
+class DeleteBoardView(DeleteView):
+    model = Board
+    template_name = 'show.html'
+    success_url = reverse_lazy('show')
+
+    def get(self, request, pk):
+        board = get_object_or_404(Board, pk=pk)
+        board.delete()
+        return HttpResponseRedirect(reverse('show'))
+    
 
     
